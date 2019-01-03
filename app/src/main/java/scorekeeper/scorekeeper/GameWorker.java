@@ -1,19 +1,24 @@
 package scorekeeper.scorekeeper;
 
-import android.widget.TextView;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toolbar;
-
-
 public class GameWorker {
 
-    public static String UpdateTurnCounter(String turn)
+    public static String AddPoints(int currentPoints)
     {
-        int length = turn.length();
-        char currentTurn =(char) turn.charAt(length-1);
+        if (currentPoints == 0)
+        {
+            return "0";
+        }
+        int newPointValue = currentPoints + 1;
+        return Integer.toString(newPointValue);
+    }
 
-
-        return "Turn " + currentTurn;
+    public static String SubtractPoints(int currentPoints)
+    {
+        if (currentPoints == 0)
+        {
+            return "0";
+        }
+        int newPointValue = currentPoints - 1;
+        return Integer.toString(newPointValue);
     }
 }
