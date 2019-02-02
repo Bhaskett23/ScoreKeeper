@@ -11,37 +11,65 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String PLAYER_ONE_POINTS = "scoreKeeper.PLAYER_ONE_POINTS";
+    public static final String PLAYER_TWO_POINTS = "scoreKeeper.PLAYER_TWO_POINTS";
+    public static final String PLAYER_ONE_COMMAND_POINTS = "scoreKeeper.PLAYER_ONE_COMMAND_POINTS";
+    public static final String PLAYER_TWO_COMMAND_POINTS = "scoreKeeper.PLAYER_TWO_COMMAND_POINTS";
+    public static final String CURRENT_TURN = "scoreKeeper.CURRENT_TURN";
+    //public static final String CURRENT_TURN_TEXT = "scoreKeeper.CURRENT_TURN_TEXT";
+
     private int mButtonClicks = 1;
+    private String mPlayer1Score = "0";
+    private String mPlayer2Score = "0";
+    private String mPlayer1CP = "0";
+    private String mPlayer2CP = "0";
+
     ImageButton addP1;
     ImageButton subP1;
     ImageButton addP2;
     ImageButton subP2;
     TextView commandPoints1;
     TextView commandPoints2;
+    TextView points1;
+    TextView points2;
+    Switch swP1Warlord;
+    Switch swP2Warlord;
+    Switch swP1Blood;
+    Switch swP2Blood;
+    Switch swP1Behind;
+    Switch swP2Behind;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView points1 = findViewById(R.id.txtPointsP1);
-        TextView points2 = findViewById(R.id.txtPointsP2);
+        points1 = findViewById(R.id.txtPointsP1);
+        points2 = findViewById(R.id.txtPointsP2);
+
+        commandPoints1 = findViewById(R.id.txtP1CP);
+        commandPoints2 = findViewById(R.id.txtP2CP);
 
         TextView turn = findViewById(R.id.lblTurn);
 
-
-        Switch swP1Warlord = findViewById(R.id.swP1Warlord);
-        Switch swP2Warlord = findViewById(R.id.swP2Warlord);
-        Switch swP1Blood = findViewById(R.id.swP1Blood);
-        Switch swP2Blood = findViewById(R.id.swP2Blood);
-        Switch swP1Behind = findViewById(R.id.swBehindP1);
-        Switch swP2Behind = findViewById(R.id.swBehindP2);
+        swP1Warlord = findViewById(R.id.swP1Warlord);
+        swP2Warlord = findViewById(R.id.swP2Warlord);
+        swP1Blood   = findViewById(R.id.swP1Blood);
+        swP2Blood   = findViewById(R.id.swP2Blood);
+        swP1Behind  = findViewById(R.id.swBehindP1);
+        swP2Behind  = findViewById(R.id.swBehindP2);
 
         Button turnBtn = findViewById(R.id.btnTurn);
         Button restart = findViewById(R.id.btnRestart);
         Button btnEndGame = findViewById(R.id.btnEndGame);
 
         TextView winner = findViewById(R.id.lblWinner);
+
+        if(savedInstanceState != null)
+        {
+            restoreGame(savedInstanceState);
+        }
 
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     points1.setText(GameWorker.SubtractPoints(player1Points));
                 }
+                saveScore();
             }
         });
 
@@ -124,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     points2.setText(GameWorker.SubtractPoints(player2Points));
                 }
+                saveScore();
             }
         });
 
@@ -144,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                     swP2Blood.setTextColor(Color.BLACK);
                     points1.setText(GameWorker.SubtractPoints(player1Points));
                 }
+                saveScore();
             }
         });
 
@@ -164,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     swP1Blood.setTextColor(Color.BLACK);
                     points2.setText(GameWorker.SubtractPoints(player2Points));
                 }
+                saveScore();
             }
         });
 
@@ -180,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     points1.setText(GameWorker.SubtractPoints(player1Points));
                 }
+                saveScore();
             }
         });
 
@@ -196,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     points2.setText(GameWorker.SubtractPoints(player2Points));
                 }
+                saveScore();
             }
         });
 
@@ -209,9 +243,6 @@ public class MainActivity extends AppCompatActivity {
 
         addP1 = findViewById(R.id.btnAddP1);
         subP1 = findViewById(R.id.btnSubP1);
-
-        commandPoints1 = findViewById(R.id.txtP1CP);
-        commandPoints2 = findViewById(R.id.txtP2CP);
 
         ImageButton addCPP1 = findViewById(R.id.btnP1CPInc);
         ImageButton subCPP1 = findViewById(R.id.btnP1CPDec);
@@ -232,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentCommandPointsP1);
                 String newPoints = GameWorker.AddPoints(d);
                 commandPoints1.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -243,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentCommandPointsP1);
                 String newPoints = GameWorker.SubtractPoints(d);
                 commandPoints1.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -254,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentCommandPointsP2);
                 String newPoints = GameWorker.AddPoints(d);
                 commandPoints2.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -265,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentCommandPointsP2);
                 String newPoints = GameWorker.SubtractPoints(d);
                 commandPoints2.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -274,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentPointsP2);
                 String newPoints = GameWorker.AddPoints(d);
                 points2.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -283,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentPointsP2);
                 String newPoints = GameWorker.SubtractPoints(d);
                 points2.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -292,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentPointsP1);
                 String newPoints = GameWorker.AddPoints(d);
                 points1.setText(newPoints);
+                saveScore();
             }
         });
 
@@ -301,8 +339,76 @@ public class MainActivity extends AppCompatActivity {
                 int d = Integer.parseInt(currentPointsP1);
                 String newPoints = GameWorker.SubtractPoints(d);
                 points1.setText(newPoints);
+                saveScore();
             }
         });
 
+    }
+
+    private void saveScore()
+    {
+        int player1TotalScore = Integer.parseInt(points1.getText().toString());
+        if(swP1Warlord.isChecked())
+        {
+            player1TotalScore = player1TotalScore-1;
+        }
+
+        if(swP1Blood.isChecked())
+        {
+            player1TotalScore = player1TotalScore-1;
+        }
+
+        if(swP1Behind.isChecked())
+        {
+            player1TotalScore = player1TotalScore-1;
+        }
+
+
+        int player2TotalScore = Integer.parseInt(points2.getText().toString());
+        if(swP2Warlord.isChecked())
+        {
+            player2TotalScore = player2TotalScore-1;
+        }
+
+        if(swP2Blood.isChecked())
+        {
+            player2TotalScore = player2TotalScore-1;
+        }
+
+        if(swP2Behind.isChecked())
+        {
+            player2TotalScore = player2TotalScore-1;
+        }
+
+        mPlayer1Score = Integer.toString(player1TotalScore);
+        mPlayer2Score = Integer.toString(player2TotalScore);
+        mPlayer1CP = commandPoints1.getText().toString();
+        mPlayer2CP = commandPoints2.getText().toString();
+    }
+
+    private void restoreGame(Bundle savedInstanceState)
+    {
+        mPlayer1Score = savedInstanceState.getString(PLAYER_ONE_POINTS);
+        mPlayer2Score = savedInstanceState.getString(PLAYER_TWO_POINTS);
+        mPlayer1CP = savedInstanceState.getString(PLAYER_ONE_COMMAND_POINTS);
+        mPlayer2CP = savedInstanceState.getString(PLAYER_TWO_COMMAND_POINTS);
+        mButtonClicks = savedInstanceState.getInt(CURRENT_TURN);
+
+        points1.setText(mPlayer1Score);
+        points2.setText(mPlayer2Score);
+        commandPoints1.setText(mPlayer1CP);
+        commandPoints2.setText(mPlayer2CP);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(PLAYER_ONE_POINTS, mPlayer1Score);
+        outState.putString(PLAYER_TWO_POINTS, mPlayer2Score);
+        outState.putString(PLAYER_ONE_COMMAND_POINTS, mPlayer1CP);
+        outState.putString(PLAYER_TWO_COMMAND_POINTS, mPlayer2CP);
+        outState.putInt(CURRENT_TURN, mButtonClicks);
     }
 }
