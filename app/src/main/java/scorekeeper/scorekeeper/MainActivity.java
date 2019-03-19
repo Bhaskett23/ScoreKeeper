@@ -11,33 +11,39 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String PLAYER_ONE_POINTS = "scoreKeeper.PLAYER_ONE_POINTS";
-    public static final String PLAYER_TWO_POINTS = "scoreKeeper.PLAYER_TWO_POINTS";
-    public static final String PLAYER_ONE_COMMAND_POINTS = "scoreKeeper.PLAYER_ONE_COMMAND_POINTS";
-    public static final String PLAYER_TWO_COMMAND_POINTS = "scoreKeeper.PLAYER_TWO_COMMAND_POINTS";
-    public static final String CURRENT_TURN = "scoreKeeper.CURRENT_TURN";
+    private static final String PLAYER_ONE_POINTS = "scoreKeeper.PLAYER_ONE_POINTS";
+    private static final String PLAYER_TWO_POINTS = "scoreKeeper.PLAYER_TWO_POINTS";
+    private static final String PLAYER_ONE_COMMAND_POINTS = "scoreKeeper.PLAYER_ONE_COMMAND_POINTS";
+    private static final String PLAYER_TWO_COMMAND_POINTS = "scoreKeeper.PLAYER_TWO_COMMAND_POINTS";
+    private static final String CURRENT_TURN = "scoreKeeper.CURRENT_TURN";
+    private static final String SHOW_END_GAME = "scoreKeeper.SHOW_END_GAME";
+    private static final String THE_WINNER_IS = "scoreKeeper.THE_WINNER_IS";
 
     private int mButtonClicks = 1;
     private String mPlayer1Score = "0";
     private String mPlayer2Score = "0";
     private String mPlayer1CP = "0";
     private String mPlayer2CP = "0";
+    private String mResult = "";
 
     ImageButton addP1;
     ImageButton subP1;
     ImageButton addP2;
     ImageButton subP2;
+    Button btnEndGame;
     TextView commandPoints1;
     TextView commandPoints2;
     TextView points1;
     TextView points2;
     TextView turn;
+    TextView winner;
     Switch swP1Warlord;
     Switch swP2Warlord;
     Switch swP1Blood;
     Switch swP2Blood;
     Switch swP1Behind;
     Switch swP2Behind;
+
 
 
 
@@ -61,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
         swP2Blood   = findViewById(R.id.swP2Blood);
         swP1Behind  = findViewById(R.id.swBehindP1);
         swP2Behind  = findViewById(R.id.swBehindP2);
+        btnEndGame = findViewById(R.id.btnEndGame);
 
         Button turnBtn = findViewById(R.id.btnTurn);
         Button restart = findViewById(R.id.btnRestart);
-        Button btnEndGame = findViewById(R.id.btnEndGame);
 
-        TextView winner = findViewById(R.id.lblWinner);
+        winner = findViewById(R.id.lblWinner);
 
         if(savedInstanceState != null)
         {
@@ -107,20 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 turn.setText("Turn " + ++mButtonClicks);
                 if (mButtonClicks >= 5)
                 {
-                    Button endBtn = findViewById(R.id.btnEndGame);
-                    endBtn.setVisibility(View.VISIBLE);
-                    endBtn.setOnClickListener(new View.OnClickListener()
-                    {
-                        public void onClick(View v)
-                        {
-                            int player1Points = Integer.parseInt(points1.getText().toString());
-                            int player2Points = Integer.parseInt(points2.getText().toString());
-                            String result = GameWorker.DecideTheWinner(player1Points, player2Points);
-
-                            winner.setVisibility(View.VISIBLE);
-                            winner.setText(result);
-                        }
-                    });
+                    btnEndGame.setVisibility(View.VISIBLE);
+                    SetupEndGameButton();
                 }
             }
         });
@@ -395,12 +389,38 @@ public class MainActivity extends AppCompatActivity {
         mPlayer1CP = savedInstanceState.getString(PLAYER_ONE_COMMAND_POINTS);
         mPlayer2CP = savedInstanceState.getString(PLAYER_TWO_COMMAND_POINTS);
         mButtonClicks = savedInstanceState.getInt(CURRENT_TURN);
+        int visibleEndGame = savedInstanceState.getInt(SHOW_END_GAME);
+        mResult = savedInstanceState.getString(THE_WINNER_IS);
 
         points1.setText(mPlayer1Score);
         points2.setText(mPlayer2Score);
         commandPoints1.setText(mPlayer1CP);
         commandPoints2.setText(mPlayer2CP);
         turn.setText("Turn " + mButtonClicks);
+        btnEndGame.setVisibility(visibleEndGame);
+
+        if(mResult != "")
+        {
+            winner.setVisibility(View.VISIBLE);
+            winner.setText(mResult);
+        }
+        SetupEndGameButton();
+    }
+
+    private void SetupEndGameButton()
+    {
+        btnEndGame.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                int player1Points = Integer.parseInt(points1.getText().toString());
+                int player2Points = Integer.parseInt(points2.getText().toString());
+                mResult = GameWorker.DecideTheWinner(player1Points, player2Points);
+
+                winner.setVisibility(View.VISIBLE);
+                winner.setText(mResult);
+            }
+        });
     }
 
     @Override
@@ -413,5 +433,14 @@ public class MainActivity extends AppCompatActivity {
         outState.putString(PLAYER_ONE_COMMAND_POINTS, mPlayer1CP);
         outState.putString(PLAYER_TWO_COMMAND_POINTS, mPlayer2CP);
         outState.putInt(CURRENT_TURN, mButtonClicks);
+        if(mButtonClicks >= 5)
+        {
+            outState.putInt(SHOW_END_GAME, View.VISIBLE);
+        }
+        else
+        {
+            outState.putInt(SHOW_END_GAME, View.INVISIBLE);
+        }
+        outState.putString(THE_WINNER_IS, mResult);
     }
 }
