@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String PLAYER_ONE_COMMAND_POINTS = "scoreKeeper.PLAYER_ONE_COMMAND_POINTS";
     public static final String PLAYER_TWO_COMMAND_POINTS = "scoreKeeper.PLAYER_TWO_COMMAND_POINTS";
     public static final String CURRENT_TURN = "scoreKeeper.CURRENT_TURN";
-    //public static final String CURRENT_TURN_TEXT = "scoreKeeper.CURRENT_TURN_TEXT";
 
     private int mButtonClicks = 1;
     private String mPlayer1Score = "0";
@@ -32,12 +31,15 @@ public class MainActivity extends AppCompatActivity {
     TextView commandPoints2;
     TextView points1;
     TextView points2;
+    TextView turn;
     Switch swP1Warlord;
     Switch swP2Warlord;
     Switch swP1Blood;
     Switch swP2Blood;
     Switch swP1Behind;
     Switch swP2Behind;
+
+
 
 
     @Override
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         commandPoints1 = findViewById(R.id.txtP1CP);
         commandPoints2 = findViewById(R.id.txtP2CP);
 
-        TextView turn = findViewById(R.id.lblTurn);
+        turn = findViewById(R.id.lblTurn);
 
         swP1Warlord = findViewById(R.id.swP1Warlord);
         swP2Warlord = findViewById(R.id.swP2Warlord);
@@ -398,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
         points2.setText(mPlayer2Score);
         commandPoints1.setText(mPlayer1CP);
         commandPoints2.setText(mPlayer2CP);
+        turn.setText("Turn " + mButtonClicks);
     }
 
     @Override
