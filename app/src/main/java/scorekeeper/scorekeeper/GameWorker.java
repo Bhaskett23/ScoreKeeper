@@ -29,6 +29,6 @@ public class GameWorker {
             return "Game ends in a draw";
         }
 
-        return "Player 1 is the victor";
+        return "Player 2 is the victor";
     }
 }
