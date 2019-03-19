@@ -17,12 +17,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String PLAYER_TWO_COMMAND_POINTS = "scoreKeeper.PLAYER_TWO_COMMAND_POINTS";
     private static final String CURRENT_TURN = "scoreKeeper.CURRENT_TURN";
     private static final String SHOW_END_GAME = "scoreKeeper.SHOW_END_GAME";
+    private static final String THE_WINNER_IS = "scoreKeeper.THE_WINNER_IS";
 
     private int mButtonClicks = 1;
     private String mPlayer1Score = "0";
     private String mPlayer2Score = "0";
     private String mPlayer1CP = "0";
     private String mPlayer2CP = "0";
+    private String mResult = "";
 
     ImageButton addP1;
     ImageButton subP1;
@@ -387,14 +389,21 @@ public class MainActivity extends AppCompatActivity {
         mPlayer1CP = savedInstanceState.getString(PLAYER_ONE_COMMAND_POINTS);
         mPlayer2CP = savedInstanceState.getString(PLAYER_TWO_COMMAND_POINTS);
         mButtonClicks = savedInstanceState.getInt(CURRENT_TURN);
-        int visableEndGame = savedInstanceState.getInt(SHOW_END_GAME);
+        int visibleEndGame = savedInstanceState.getInt(SHOW_END_GAME);
+        mResult = savedInstanceState.getString(THE_WINNER_IS);
 
         points1.setText(mPlayer1Score);
         points2.setText(mPlayer2Score);
         commandPoints1.setText(mPlayer1CP);
         commandPoints2.setText(mPlayer2CP);
         turn.setText("Turn " + mButtonClicks);
-        btnEndGame.setVisibility(visableEndGame);
+        btnEndGame.setVisibility(visibleEndGame);
+
+        if(mResult != "")
+        {
+            winner.setVisibility(View.VISIBLE);
+            winner.setText(mResult);
+        }
         SetupEndGameButton();
     }
 
@@ -406,10 +415,10 @@ public class MainActivity extends AppCompatActivity {
             {
                 int player1Points = Integer.parseInt(points1.getText().toString());
                 int player2Points = Integer.parseInt(points2.getText().toString());
-                String result = GameWorker.DecideTheWinner(player1Points, player2Points);
+                mResult = GameWorker.DecideTheWinner(player1Points, player2Points);
 
                 winner.setVisibility(View.VISIBLE);
-                winner.setText(result);
+                winner.setText(mResult);
             }
         });
     }
@@ -432,5 +441,6 @@ public class MainActivity extends AppCompatActivity {
         {
             outState.putInt(SHOW_END_GAME, View.INVISIBLE);
         }
+        outState.putString(THE_WINNER_IS, mResult);
     }
 }
