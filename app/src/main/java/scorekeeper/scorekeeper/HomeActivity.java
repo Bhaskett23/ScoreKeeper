@@ -1,6 +1,7 @@
 package scorekeeper.scorekeeper;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
@@ -19,12 +20,21 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private GameAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+  //  private ScoreKeeperOpenHelper mDbOpenHelper;
+
+    @Override
+    protected void onDestroy() {
+ //       mDbOpenHelper.close();
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+  //      mDbOpenHelper = new ScoreKeeperOpenHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initializeDisplayContent();
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initializeDisplayContent() {
+      //  SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
         List<GameModel> currentGames = DataManager.getInstance().getGames();
         recyclerView = findViewById(R.id.list_games);
         mAdapter = new GameAdapter(currentGames);
