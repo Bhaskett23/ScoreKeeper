@@ -126,11 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (b)
                 {
-                    points1.setText(GameWorker.AddPoints(player1Points));
+                    points1.setText(GameWorker1.AddPoints(player1Points));
                 }
                 else
                 {
-                    points1.setText(GameWorker.SubtractPoints(player1Points));
+                    points1.setText(GameWorker1.SubtractPoints(player1Points));
                 }
                 saveScore();
             }
@@ -143,11 +143,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (b)
                 {
-                    points2.setText(GameWorker.AddPoints(player2Points));
+                    points2.setText(GameWorker1.AddPoints(player2Points));
                 }
                 else
                 {
-                    points2.setText(GameWorker.SubtractPoints(player2Points));
+                    points2.setText(GameWorker1.SubtractPoints(player2Points));
                 }
                 saveScore();
             }
@@ -162,13 +162,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     swP2Blood.setClickable(false);
                     swP2Blood.setTextColor(Color.GRAY);
-                    points1.setText(GameWorker.AddPoints(player1Points));
+                    points1.setText(GameWorker1.AddPoints(player1Points));
                 }
                 else
                 {
                     swP2Blood.setClickable(true);
                     swP2Blood.setTextColor(Color.BLACK);
-                    points1.setText(GameWorker.SubtractPoints(player1Points));
+                    points1.setText(GameWorker1.SubtractPoints(player1Points));
                 }
                 saveScore();
             }
@@ -183,13 +183,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     swP1Blood.setClickable(false);
                     swP1Blood.setTextColor(Color.GRAY);
-                    points2.setText(GameWorker.AddPoints(player2Points));
+                    points2.setText(GameWorker1.AddPoints(player2Points));
                 }
                 else
                 {
                     swP1Blood.setClickable(true);
                     swP1Blood.setTextColor(Color.BLACK);
-                    points2.setText(GameWorker.SubtractPoints(player2Points));
+                    points2.setText(GameWorker1.SubtractPoints(player2Points));
                 }
                 saveScore();
             }
@@ -202,11 +202,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (b)
                 {
-                    points1.setText(GameWorker.AddPoints(player1Points));
+                    points1.setText(GameWorker1.AddPoints(player1Points));
                 }
                 else
                 {
-                    points1.setText(GameWorker.SubtractPoints(player1Points));
+                    points1.setText(GameWorker1.SubtractPoints(player1Points));
                 }
                 saveScore();
             }
@@ -219,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (b)
                 {
-                    points2.setText(GameWorker.AddPoints(player2Points));
+                    points2.setText(GameWorker1.AddPoints(player2Points));
                 }
                 else
                 {
-                    points2.setText(GameWorker.SubtractPoints(player2Points));
+                    points2.setText(GameWorker1.SubtractPoints(player2Points));
                 }
                 saveScore();
             }
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String currentCommandPointsP1 = commandPoints1.getText().toString();
                 int d = Integer.parseInt(currentCommandPointsP1);
-                String newPoints = GameWorker.AddPoints(d);
+                String newPoints = GameWorker1.AddPoints(d);
                 commandPoints1.setText(newPoints);
                 saveScore();
             }
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String currentCommandPointsP1 = commandPoints1.getText().toString();
                 int d = Integer.parseInt(currentCommandPointsP1);
-                String newPoints = GameWorker.SubtractPoints(d);
+                String newPoints = GameWorker1.SubtractPoints(d);
                 commandPoints1.setText(newPoints);
                 saveScore();
             }
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String currentCommandPointsP2 = commandPoints2.getText().toString();
                 int d = Integer.parseInt(currentCommandPointsP2);
-                String newPoints = GameWorker.AddPoints(d);
+                String newPoints = GameWorker1.AddPoints(d);
                 commandPoints2.setText(newPoints);
                 saveScore();
             }
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String currentCommandPointsP2 = commandPoints2.getText().toString();
                 int d = Integer.parseInt(currentCommandPointsP2);
-                String newPoints = GameWorker.SubtractPoints(d);
+                String newPoints = GameWorker1.SubtractPoints(d);
                 commandPoints2.setText(newPoints);
                 saveScore();
             }
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String currentPointsP2 = points2.getText().toString();
                 int d = Integer.parseInt(currentPointsP2);
-                String newPoints = GameWorker.AddPoints(d);
+                String newPoints = GameWorker1.AddPoints(d);
                 points2.setText(newPoints);
                 saveScore();
             }
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String currentPointsP2 = points2.getText().toString();
                 int d = Integer.parseInt(currentPointsP2);
-                String newPoints = GameWorker.SubtractPoints(d);
+                String newPoints = GameWorker1.SubtractPoints(d);
                 points2.setText(newPoints);
                 saveScore();
             }
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String currentPointsP1 = points1.getText().toString();
                 int d = Integer.parseInt(currentPointsP1);
-                String newPoints = GameWorker.AddPoints(d);
+                String newPoints = GameWorker1.AddPoints(d);
                 points1.setText(newPoints);
                 saveScore();
             }
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String currentPointsP1 = points1.getText().toString();
                 int d = Integer.parseInt(currentPointsP1);
-                String newPoints = GameWorker.SubtractPoints(d);
+                String newPoints = GameWorker1.SubtractPoints(d);
                 points1.setText(newPoints);
                 saveScore();
             }
@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 int player1Points = Integer.parseInt(points1.getText().toString());
                 int player2Points = Integer.parseInt(points2.getText().toString());
-                mResult = GameWorker.DecideTheWinner(player1Points, player2Points);
+                mResult = GameWorker1.DecideTheWinner(player1Points, player2Points);
 
                 winner.setVisibility(View.VISIBLE);
                 winner.setText(mResult);
