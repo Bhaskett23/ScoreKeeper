@@ -20,17 +20,17 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private GameAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-  //  private ScoreKeeperOpenHelper mDbOpenHelper;
+    private ScoreKeeperOpenHelper mDbOpenHelper;
 
     @Override
     protected void onDestroy() {
- //       mDbOpenHelper.close();
+        mDbOpenHelper.close();
         super.onDestroy();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-  //      mDbOpenHelper = new ScoreKeeperOpenHelper(this);
+        mDbOpenHelper = new ScoreKeeperOpenHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initializeDisplayContent();
@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initializeDisplayContent() {
-      //  SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
         List<GameModel> currentGames = DataManager.getInstance().getGames();
         recyclerView = findViewById(R.id.list_games);
         mAdapter = new GameAdapter(currentGames);

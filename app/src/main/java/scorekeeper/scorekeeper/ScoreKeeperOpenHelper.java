@@ -15,10 +15,10 @@ public class ScoreKeeperOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-  //      sqLiteDatabase.execSQL(ScoreKeeperDatabaseContract.GamesEntry.SQL_CREATE_TABLE);
-  //      sqLiteDatabase.execSQL(ScoreKeeperDatabaseContract.PlayerEntry.SQL_CREATE_TABLE);
+        sqLiteDatabase.execSQL(ScoreKeeperDatabaseContract.GamesEntry.SQL_CREATE_TABLE);
+        sqLiteDatabase.execSQL(ScoreKeeperDatabaseContract.PlayerEntry.SQL_CREATE_TABLE);
 
-  //      DatabaseDataWorker worker = new DatabaseDataWorker(sqLiteDatabase);
+        DatabaseDataWorker worker = new DatabaseDataWorker(sqLiteDatabase);
     }
 
     @Override
