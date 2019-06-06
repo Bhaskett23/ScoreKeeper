@@ -47,14 +47,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initializeDisplayContent() {
-        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
+        DataManager.loadFromDatabase(mDbOpenHelper);
+
         List<GameModel> currentGames = DataManager.getInstance().getGames();
         recyclerView = findViewById(R.id.list_games);
         mAdapter = new GameAdapter(currentGames);
         recyclerView.setAdapter(mAdapter);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
     }
 
 }

@@ -7,13 +7,17 @@ public class PlayerModel
 
     }
 
-    public PlayerModel(int victoryPoints,
+    public PlayerModel(
+                        int id,
+                        String name,
+                        int victoryPoints,
                        int commandPoints,
                        boolean firstBlood,
                        boolean warlord,
-                       boolean behindLines,
-                       String name)
+                       boolean behindLines
+                       )
     {
+        mID = id;
         mVictoryPoints = victoryPoints;
         mCommandPoints = commandPoints;
         mFirstBlood = firstBlood;
@@ -22,6 +26,7 @@ public class PlayerModel
         mName = name;
     }
 
+    private int mID;
     private int mVictoryPoints;
     private int mCommandPoints;
     private boolean mFirstBlood;
@@ -29,6 +34,7 @@ public class PlayerModel
     private boolean mBehindLines;
     private String mName;
 
+    public int getID(){return mID;}
     public int getVictoryPoints(){return mVictoryPoints;}
     public int getCommandPoints(){return mCommandPoints;}
     public boolean getFirstBlood(){return mFirstBlood;}
