@@ -2,6 +2,12 @@ package scorekeeper.scorekeeper;
 
 public class GameModel {
 
+    public GameModel()
+    {
+        mPlayer1 = new PlayerModel();
+        mPlayer2 = new PlayerModel();
+    }
+
     public GameModel(int id, String name, PlayerModel player1, PlayerModel player2, int turnNum)
     {
         mID = id;

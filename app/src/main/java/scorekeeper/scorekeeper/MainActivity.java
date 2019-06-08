@@ -1,5 +1,7 @@
 package scorekeeper.scorekeeper;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import java.util.List;
+
+import static scorekeeper.scorekeeper.ScoreKeeperDatabaseContract.*;
 
 public class MainActivity extends AppCompatActivity {
     private static final String PLAYER_ONE_POINTS = "scoreKeeper.PLAYER_ONE_POINTS";
@@ -25,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private String mPlayer1CP = "0";
     private String mPlayer2CP = "0";
     private String mResult = "";
+
+    private GameModel game;
 
     ImageButton addP1;
     ImageButton subP1;
@@ -44,14 +52,18 @@ public class MainActivity extends AppCompatActivity {
     Switch swP1Behind;
     Switch swP2Behind;
 
-
-
+    ScoreKeeperOpenHelper mDBOpenHelper;
+    private Cursor mGameCursor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDBOpenHelper = new ScoreKeeperOpenHelper(this);
+
+        loadGameData(-1);
 
         points1 = findViewById(R.id.txtPointsP1);
         points2 = findViewById(R.id.txtPointsP2);
@@ -230,6 +242,43 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setUpClicks();
+    }
+
+    private void loadGameData(int gameID) {
+
+        SQLiteDatabase db = mDBOpenHelper.getReadableDatabase();
+
+        if (gameID == -1)
+        {
+            game = new GameModel();
+        }
+
+        List<GameModel> games = DataManager.getInstance().getGames();
+        game = games.get(gameID - 1);
+
+ //       String selection = GamesEntry.COLUMN_GAME_NAME + " = " + gameID;
+//
+ //       String[] gameColumns = {
+ //               GamesEntry.COLUMN_GAME_NAME,
+ //               GamesEntry.COLUMN_TURN,
+ //               GamesEntry.COLUMN_PLAYER1_ID,
+ //               GamesEntry.COLUMN_PLAYER2_ID
+ //       };
+//
+ //       mGameCursor = db.query(GamesEntry.TABLE_NAME, gameColumns, selection, null, null, null, null);
+ //       int gameNamePos = mGameCursor.getColumnIndex(GamesEntry.COLUMN_GAME_NAME);
+ //       int gameTurnPos = mGameCursor.getColumnIndex(GamesEntry.COLUMN_TURN);
+ //       int gamePlayer1IDPos = mGameCursor.getColumnIndex(GamesEntry.COLUMN_PLAYER1_ID);
+ //       int gamePlayer2IDPos = mGameCursor.getColumnIndex(GamesEntry.COLUMN_PLAYER2_ID);
+//
+ //       while(mGameCursor.moveToNext())
+ //       {
+ //           String gameName = mGameCursor.getString(gameNamePos);
+ //           int gameTurn = mGameCursor.getInt(gameTurnPos);
+ //           int player1ID = mGameCursor.getInt(gamePlayer1IDPos);
+ //           int player2ID = mGameCursor.getInt(gamePlayer2IDPos);
+ //           game = new GameModel(gameID, gameName, null, null, gameTurn);
+ //       }
     }
 
     public void setUpClicks()
@@ -421,6 +470,12 @@ public class MainActivity extends AppCompatActivity {
                 winner.setText(mResult);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        mDBOpenHelper.close();
+        super.onDestroy();
     }
 
     @Override

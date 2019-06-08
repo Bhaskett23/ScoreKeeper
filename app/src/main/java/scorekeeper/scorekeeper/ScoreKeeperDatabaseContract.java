@@ -7,6 +7,7 @@ public final class ScoreKeeperDatabaseContract {
     {
 
     }
+
     public static final class PlayerEntry implements BaseColumns {
         public static final String TABLE_NAME = "player_info";
         public static final String COLUMN_PLAYER_NAME = "player_name";
